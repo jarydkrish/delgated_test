@@ -13,10 +13,12 @@ class LakesController < ApplicationController
   # GET /lakes/new
   def new
     @lake = Lake.new
+    @lake.article = Article.new
   end
 
   # GET /lakes/1/edit
   def edit
+    @lake.article = Article.new if @lake.article.nil?
   end
 
   # POST /lakes or /lakes.json
@@ -65,6 +67,6 @@ class LakesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def lake_params
-      params.require(:lake).permit(:lake_id)
+      params.require(:lake).permit(:lake_id, article_attributes: [:title, :description])
     end
 end
